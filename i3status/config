@@ -1,0 +1,142 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+        colors = true
+        interval = 5
+        output_format = "i3bar"
+        color_good = "#00FF00"
+        color_degraded = "#FFFF00"
+        color_bad = "#FF0000"
+}
+
+order += "path_exists VPN"
+order += "ipv6"
+order += "wireless _first_"
+order += "ethernet _first_"
+order += "volume master"
+order += "battery all"
+order += "disk /"
+order += "load"
+order += "cpu_temperature 0"
+order += "memory"
+order += "tztime local"
+
+ipv6 {
+        format_up = "IPv6: %ip"
+        format_down = ""
+}
+wireless _first_ {
+        # format_up = " (%quality at %essid, %bitrate / %frequency) %ip"
+        format_up = " (%quality at %essid)"
+        # format_up = "Wi-Fi: (%quality at %essid)"
+        format_down = "W: down"
+}
+
+ethernet _first_ {
+        format_up = "E: %ip (%speed)"
+        format_down = ""
+}
+
+battery all {
+        format = "%status %percentage %remaining"
+
+        # true - показ процента заряда от 0 до 100
+        # false - показ процента заряда от 0 до n, с учетом
+        # изношенности аккумулятора
+        last_full_capacity = false
+        format_down = "No battery"
+        status_chr = "" # статус подзарядки
+        # status_chr = "Charging:" # статус подзарядки
+        status_bat = " " # статус в режиме работы от батареи
+        # status_bat = "Battery:" # статус в режиме работы от батареи
+        status_unk = "? UNK" # неизвестный статус
+        status_full = "" # статус полного заряда
+        # status_full = "Full" # статус полного заряда
+        # path = "/sys/class/power_supply/BAT%d/uevent"
+
+        # нижний порог заряда, после которого блок
+        # будет окрашен в "color_bad" (по умолчанию красный)
+        # подробнее в man i3status
+        low_threshold = 10
+}
+
+disk "/" {
+        # доступные переменные:
+        # %used, %percentage_used - занятое пространство
+        # %free, %percentage_free - свободное пространство
+        # %avail, %percentage_avail - доступное пространство
+        # %total - всего
+        format = " %avail"
+        # format = "Disk: %avail"
+
+        # будет окрашен в "color_bad" (по умолчанию красный)
+        # при достижении нижнего порога менее 10GB доступного пространства
+        low_threshold = "10"
+        threshold_type = "gbytes_avail"
+        format_below_threshold = " Warning: %avail"
+}
+
+load {
+        format = " %1min"
+        # format = "LA-1: %1min"
+}
+
+memory {
+        # format = "%used | %available"
+
+        # доступные переменные:
+        # %total, percentage_total
+        # %used, percentage_used
+        # %free, percentage_free
+        # %available, percentage_available
+        # %shared, percentage_shared
+        format = " %used"
+        # format = "RAM (used): %used"
+
+        # порог, при котором вывод окрасится в
+        # желтый (degraded) или красный (critical)
+        # а формат вывода изменится на format_degraded
+        threshold_degraded = "1G"
+        threshold_critical = "200M"
+        format_degraded = "MEMORY < %available"
+        threshold_degraded = "1G"
+        format_degraded = "MEMORY < %available"
+}
+
+tztime local {
+        # format = "%Y-%m-%d %H:%M:%S"
+        format = " %d %b  %H:%M:%S"
+        # format = "Date-Time: %d %b, %H:%M:%S"
+}
+
+path_exists VPN {
+       # path exists when a VPN tunnel launched by nmcli/nm-applet is active
+       path = "/proc/sys/net/ipv4/conf/tun0"
+}
+
+volume master {
+    format = " %volume" # шаблон громкости в активном состоянии
+    # format = "Volume: %volume" # шаблон громкости в активном состоянии
+    format_muted = " muted %volume" # шаблон громкости в состоянии muted (без звука)
+    device = "default"
+    mixer = "Master"
+    mixer_idx = 0
+}
+
+cpu_temperature 0 {
+    # format = " %degrees"
+    format = "T: %degrees °C"
+
+    # верхний порог температуры, при достижении которого
+    # вывод окрасится красным,
+    # и формат изменится на format_above_threshold
+    max_threshold = "60"
+    format_above_threshold = " %degrees °C"
+    # path = "/sys/class/thermal/thermal_zone0/temp"
+}

@@ -1,0 +1,3 @@
+[submodule "lsp/lua-language-server"]
+ 	path = lsp/lua-language-server
+	url = https://hub.fastgit.xyz/sumneko/lua-language-server 
