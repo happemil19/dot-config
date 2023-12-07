@@ -19,6 +19,7 @@ set $right l
 # is used in the bar {} block below.
 # font pango:monospace 8
 font pango:DejaVu Sans Mono Nerd Font 8
+for_window [class="^.*"] border pixel 1
 
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
@@ -229,7 +230,7 @@ mode "$mode_system" {
 bindsym $mod+BackSpace mode "$mode_system"
 
 # class                 border  bground text    indicator child_border
-client.focused          #2D7124 #1E4B18 #FFFFFF #1E4B18   #1E4B18
+client.focused          #2D7124 #1E4B18 #FFFFFF #1E4B18   #17651A
 client.focused_inactive #333333 #5F676A #FFFFFF #484E50   #5F676A
 client.unfocused        #333333 #222222 #888888 #292D2E   #222222
 client.urgent           #2F343A #900000 #FFFFFF #900000   #900000
@@ -278,9 +279,9 @@ bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl -q set 5%+
 # gaps inner 4
 gaps inner 10
 # # gaps outer 5
-# gaps outer -4
-smart_gaps on
-smart_borders on
+gaps outer 5
+# smart_gaps on
+# smart_borders on
 
 # Enable transparency
 exec (sleep 10 && xcompmgr -c) &
